@@ -520,7 +520,7 @@ namespace qi
 
     auto deleter = [&]() -> boost::function<void(GenericObject*)> {
     if (destroyObject || onDelete)
-      return boost::bind(&cleanupDynamicObject, _1, destroyObject, onDelete);
+      return boost::bind(&cleanupDynamicObject, boost::placeholders::_1, destroyObject, onDelete);
     else
       return &AnyObject::deleteGenericObjectOnly;
     }();

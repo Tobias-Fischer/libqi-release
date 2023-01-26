@@ -551,7 +551,7 @@ namespace qi
   void ServiceDirectory::_setServiceBoundObject(boost::shared_ptr<BoundObject> bo)
   {
     serviceBoundObject = bo;
-    bo->setOnSocketUnbound(boost::bind(&ServiceDirectory::removeClientSocket, this, _1));
+    bo->setOnSocketUnbound(boost::bind(&ServiceDirectory::removeClientSocket, this, boost::placeholders::_1));
   }
 
 } // !qi

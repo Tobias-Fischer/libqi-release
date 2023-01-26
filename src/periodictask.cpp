@@ -275,7 +275,7 @@ namespace qi
     // _onTaskFinished needs to be executed even if the default thread pool is destroyed
     // to achieve this we want _onTaskFinished to be executed in the thread setting the result.
     _task.connect(qi::track(boost::bind(
-          &PeriodicTaskPrivate::_onTaskFinished, this, _1), this), qi::FutureCallbackType_Sync);
+          &PeriodicTaskPrivate::_onTaskFinished, this, boost::placeholders::_1), this), qi::FutureCallbackType_Sync);
   }
 
   void PeriodicTaskPrivate::_wrap()

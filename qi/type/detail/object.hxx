@@ -551,7 +551,7 @@ template<typename T> inline Object<T>::Object(T* ptr, boost::function<void(T*)> 
   ObjectTypeInterface* otype = interface();
   if (deleter)
     _obj = detail::ManagedObjectPtr(new GenericObject(otype, ptr),
-      boost::bind(&Object::deleteCustomDeleter, _1, deleter));
+      boost::bind(&Object::deleteCustomDeleter, boost::placeholders::_1, deleter));
   else
     _obj = detail::ManagedObjectPtr(new GenericObject(otype, ptr), &deleteObject);
 }

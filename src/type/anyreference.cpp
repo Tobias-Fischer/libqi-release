@@ -105,7 +105,7 @@ namespace detail
               new GenericObject(
                 static_cast<ObjectTypeInterface*>(pointedSrc._type),
                 pointedSrc._value, pointedSrc.to<AnyObject>().uid()),
-              boost::bind(dropIt, _1, qi::AnyValue(*this)));
+              boost::bind(dropIt, boost::placeholders::_1, qi::AnyValue(*this)));
         return AnyReference::from(o).convert((TypeInterface*)targetType);
       }
       if (pointedDstPair.ownsReference())

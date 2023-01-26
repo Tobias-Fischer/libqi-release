@@ -444,7 +444,7 @@ namespace qi {
           id = addHandler("consoleloghandler",
                           boost::bind(&ConsoleLogHandler::log,
                                       _glConsoleLogHandler,
-                                      _1, _2, _3, _4, _5, _6, _7, _8),
+                                      boost::placeholders::_1, boost::placeholders::_2, boost::placeholders::_3, boost::placeholders::_4, boost::placeholders::_5, boost::placeholders::_6, boost::placeholders::_7, boost::placeholders::_8),
                           verb);
           QI_ASSERT(id == 0 || id == invalidId);
         }
@@ -909,7 +909,7 @@ namespace qi {
     {
       return addHandler(name,
           boost::bind(adaptLogFuncHandler,
-                      fct, _1, _2, _3, _4, _5, _6, _7, _8),
+                      fct, boost::placeholders::_1, boost::placeholders::_2, boost::placeholders::_3, boost::placeholders::_4, boost::placeholders::_5, boost::placeholders::_6, boost::placeholders::_7, boost::placeholders::_8),
                       defaultLevel);
     }
 

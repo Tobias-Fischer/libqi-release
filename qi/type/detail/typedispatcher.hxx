@@ -72,7 +72,7 @@ namespace qi {
           auto go = detail::ManagedObjectPtr(
             new GenericObject(static_cast<ObjectTypeInterface*>(pointee.type()),
                               pointee.rawValue()),
-            boost::bind(&AnyObject::deleteCustomDeleter, _1,
+            boost::bind(&AnyObject::deleteCustomDeleter, boost::placeholders::_1,
                         (boost::function<void(Empty*)>)boost::bind(&AnyReference::destroy,
                                                                    shared_ptr)));
           AnyObject ao(std::move(go));

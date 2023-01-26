@@ -74,7 +74,7 @@ namespace qi
 
       // property part
       prop._asyncGetter = boost::bind(Getter<T>{}, object, propertyName);
-      prop._asyncSetter = boost::bind(Setter<T>{}, _1, _2, object, propertyName);
+      prop._asyncSetter = boost::bind(Setter<T>{}, boost::placeholders::_1, boost::placeholders::_2, object, propertyName);
     }
 
     template<typename T>

@@ -128,7 +128,7 @@ namespace qi {
     qi::Future<qi::MetaObject> fut =
       _self.async<qi::MetaObject>("metaObject", 0U);
     fut.connect(trackWithFallback(&throwRemoteObjectDestroyedException,
-                                  boost::bind<void>(&RemoteObject::onMetaObject, this, _1, prom),
+                                  boost::bind<void>(&RemoteObject::onMetaObject, this, boost::placeholders::_1, prom),
                                   weak_from_this()));
     return prom.future();
   }
@@ -500,7 +500,7 @@ namespace qi {
     }
 
     rsl.future.connect(trackWithFallback(&throwRemoteObjectDestroyedException,
-                                         boost::bind<void>(&onEventConnected, this, _1, prom, uid),
+                                         boost::bind<void>(&onEventConnected, this, boost::placeholders::_1, prom, uid),
                                          weak_from_this()));
     return prom.future();
   }

@@ -1015,7 +1015,7 @@ namespace qi {
     ctx->target = this;
     ctx->helper = helper;
     ctx->maxDelay = maxDelay;
-    ctx->promise = Promise<void>(boost::bind<void>(&monitor_cancel, _1, ctx));
+    ctx->promise = Promise<void>(boost::bind<void>(&monitor_cancel, boost::placeholders::_1, ctx));
     ctx->isFired = false;
     ctx->ending = false;
     monitor_ping(ctx);

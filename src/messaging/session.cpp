@@ -45,7 +45,7 @@ namespace qi {
     session->serviceUnregistered.setCallType(qi::MetaCallType_Queued);
 
     _sdClient.connected.connect(session->connected);
-    _sdClient.disconnected.connect(&SessionPrivate::onServiceDirectoryClientDisconnected, this, _1);
+    _sdClient.disconnected.connect(&SessionPrivate::onServiceDirectoryClientDisconnected, this, boost::placeholders::_1);
     _sdClient.disconnected.connect(session->disconnected);
     _sdClient.serviceAdded.connect(session->serviceRegistered);
     _sdClient.serviceRemoved.connect(session->serviceUnregistered);
@@ -480,7 +480,7 @@ namespace qi {
 
     qi::Promise<AnyValue> promise;
     promise.setOnCancel([ret](qi::Promise<AnyValue>&) mutable { ret.cancel(); });
-    ret.then(qi::bind(qi::detail::futureAdapter<qi::AnyValue>, _1, promise));
+    ret.then(qi::bind(qi::detail::futureAdapter<qi::AnyValue>, boost::placeholders::_1, promise));
     return promise.future();
   }
 

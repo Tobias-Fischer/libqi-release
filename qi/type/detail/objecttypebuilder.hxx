@@ -32,7 +32,7 @@ KA_WARNING_DISABLE(, noexcept-type)
         getStrandAccessor()
     {
       return AnyFunction::from(boost::function<qi::Strand*(void*)>(
-          boost::bind(&callWithVoid<T>, &T::strand, _1)));
+          boost::bind(&callWithVoid<T>, &T::strand, boost::placeholders::_1)));
     }
     template <typename T>
     typename boost::disable_if<boost::is_base_of<Actor, T>, AnyFunction>::type
@@ -185,7 +185,7 @@ KA_WARNING_DISABLE(, noexcept-type)
   unsigned int
   ObjectTypeBuilderBase::advertiseSignal(const std::string& eventName, A accessor, int id, bool isSignalProperty)
   {
-    SignalMemberGetter fun = boost::bind(&signalAccess<A>, accessor, _1);
+    SignalMemberGetter fun = boost::bind(&signalAccess<A>, accessor, boost::placeholders::_1);
     using FunctionType = typename detail::Accessor<A>::value_type::FunctionType;
     return xAdvertiseSignal(eventName,
       detail::FunctionSignature<FunctionType>::signature(), fun, id, isSignalProperty);
@@ -195,7 +195,7 @@ KA_WARNING_DISABLE(, noexcept-type)
   unsigned int ObjectTypeBuilderBase::advertiseProperty(const std::string& name, A accessor)
   {
     unsigned int id = advertiseSignal(name, accessor, -1, true);
-    PropertyMemberGetter pg = boost::bind(&propertyAccess<A>, accessor, _1);
+    PropertyMemberGetter pg = boost::bind(&propertyAccess<A>, accessor, boost::placeholders::_1);
     using PropertyType = typename detail::Accessor<A>::value_type::PropertyType;
     return xAdvertiseProperty(name, typeOf<PropertyType>()->signature(), pg, id);
   }

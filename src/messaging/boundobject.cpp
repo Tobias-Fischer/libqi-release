@@ -158,7 +158,7 @@ namespace qi
     if (!ms)
       throw std::runtime_error("No such signal");
     QI_ASSERT(_currentSocket);
-    AnyFunction mc = AnyFunction::fromDynamicFunction(boost::bind(&forwardEvent, _1, _serviceId, _objectId, eventId, ms->parametersSignature(), _currentSocket, asHostWeakPtr(), ""));
+    AnyFunction mc = AnyFunction::fromDynamicFunction(boost::bind(&forwardEvent, boost::placeholders::_1, _serviceId, _objectId, eventId, ms->parametersSignature(), _currentSocket, asHostWeakPtr(), ""));
     qi::Future<SignalLink> linking = _object.connect(eventId, mc);
     auto& linkEntry = _links[_currentSocket][remoteSignalLinkId];
     linkEntry = RemoteSignalLink(linking, eventId);
@@ -175,7 +175,7 @@ namespace qi
     if (!ms)
       throw std::runtime_error("No such signal");
     QI_ASSERT(_currentSocket);
-    AnyFunction mc = AnyFunction::fromDynamicFunction(boost::bind(&forwardEvent, _1, _serviceId, _objectId, eventId, ms->parametersSignature(), _currentSocket, asHostWeakPtr(), signature));
+    AnyFunction mc = AnyFunction::fromDynamicFunction(boost::bind(&forwardEvent, boost::placeholders::_1, _serviceId, _objectId, eventId, ms->parametersSignature(), _currentSocket, asHostWeakPtr(), signature));
     qi::Future<SignalLink> linking = _object.connect(eventId, mc);
     auto& linkEntry = _links[_currentSocket][remoteSignalLinkId];
     linkEntry = RemoteSignalLink(linking, eventId);
@@ -400,7 +400,7 @@ namespace qi
         _currentSocket.reset();
 
         fut.connect(boost::bind<void>
-                    (&BoundObject::serverResultAdapter, _1, retSig, _gethost(), socket, msg.address(), sig,
+                    (&BoundObject::serverResultAdapter, boost::placeholders::_1, retSig, _gethost(), socket, msg.address(), sig,
                      CancelableKitWeak(_cancelables), cancelRequested));
       }
         break;

@@ -114,7 +114,7 @@ public:
  *             qi::Future<int> fut = returnAsynchronouslyNumber(i);
  *
  *             qi::Promise<int> prom;
- *             fut.connect(boost::bind(&mult42, prom, _1));
+ *             fut.connect(boost::bind(&mult42, prom, boost::placeholders::_1));
  *             barrier.addFuture(prom.future());
  *
  *             // [1.2]
@@ -127,7 +127,7 @@ public:
  *
  *         // [2]:
  *         qi::Promise<int> res;
- *         barrier.future().connect(boost::bind(&sumList, res, _1));
+ *         barrier.future().connect(boost::bind(&sumList, res, boost::placeholders::_1));
  *         return res.future();
  *     }
  *

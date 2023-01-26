@@ -292,7 +292,7 @@ namespace qi
     qi::BufferReader br(_buffer);
     AnyReference res(type);
     return AnyValue(
-      decodeBinary(&br, res, boost::bind(deserializeObject, _1, socket), socket),
+      decodeBinary(&br, res, boost::bind(deserializeObject, boost::placeholders::_1, socket), socket),
       false, // i.e. don't copy
       true   // i.e. become resource owner
     );
@@ -330,19 +330,19 @@ namespace qi
         setError(ss.str());
       }
       else
-        encodeBinary(*conv, boost::bind(serializeObject, _1, context, socket),
+        encodeBinary(*conv, boost::bind(serializeObject, boost::placeholders::_1, context, socket),
                      socket);
     }
     else if (value.type()->kind() != qi::TypeKind_Void)
     {
-      encodeBinary(value, boost::bind(serializeObject, _1, context, socket), socket);
+      encodeBinary(value, boost::bind(serializeObject, boost::placeholders::_1, context, socket), socket);
     }
   }
 
   void Message::setValues(const std::vector<qi::AnyReference>& values,
                           boost::weak_ptr<ObjectHost> context, MessageSocketPtr socket)
   {
-    SerializeObjectCallback scb = boost::bind(serializeObject, _1, context, socket);
+    SerializeObjectCallback scb = boost::bind(serializeObject, boost::placeholders::_1, context, socket);
     for (unsigned i = 0; i < values.size(); ++i)
       encodeBinary(values[i], scb, socket);
   }
@@ -372,7 +372,7 @@ namespace qi
       AnyReference tuple = makeGenericTuplePtr(types, values);
       AnyValue val(tuple, false, false);
       encodeBinary(AnyReference::from(val),
-                   boost::bind(serializeObject, _1, context, socket), socket);
+                   boost::bind(serializeObject, boost::placeholders::_1, context, socket), socket);
       return;
     }
     /* This check does not makes sense for this transport layer who does not care,
