@@ -1,6 +1,8 @@
 #pragma once
 #ifndef _QI_SOCK_SOCKETWITHCONTEXT_HPP
 #define _QI_SOCK_SOCKETWITHCONTEXT_HPP
+#include <boost/asio.hpp>
+#include <boost/asio/ssl.hpp>
 #include <ka/src.hpp>
 #include <ka/mutablestore.hpp>
 #include "traits.hpp"
@@ -28,6 +30,7 @@ namespace qi { namespace sock {
     using handshake_type = HandshakeSide<socket_t>;
     using lowest_layer_type = Lowest<socket_t>;
     using next_layer_type = typename socket_t::next_layer_type;
+    using executor_type = boost::asio::io_context::executor_type;
 
     SocketWithContext(io_service_t& io, const SslContextPtr<N>& ctx)
       : context(ctx)
