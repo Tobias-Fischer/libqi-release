@@ -20,6 +20,7 @@ namespace qi { namespace sock {
   {
     using acceptor_type = boost::asio::ip::tcp::acceptor;
     using resolver_type = boost::asio::ip::tcp::resolver;
+    using executor_type = boost::asio::io_context::executor_type;
     using ssl_context_type = boost::asio::ssl::context;
     using ssl_socket_type = boost::asio::ssl::stream<boost::asio::ip::tcp::socket>;
     using socket_option_no_delay_type = boost::asio::ip::tcp::no_delay;
